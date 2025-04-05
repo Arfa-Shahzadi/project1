@@ -1,9 +1,9 @@
-import streamlit as at
+import streamlit as st
 import pandas as pd
 import os
 from io import BytesIO
 
-st.set_page_config(page_title="Data Sweeper", layout='Wide')
+st.set_page_config(page_title="Data Sweeper",layout='Wide' )
 
 #Coutem CSS
 st.markdown(
@@ -11,7 +11,7 @@ st.markdown(
     <style>
     .stAPP{
         background-color: black;
-        color- white;
+        color: white;
         }
         </style>
         """,
@@ -27,8 +27,8 @@ st.write("Transform your files between CSv and Excel formates with build-in data
 # file uploder
 uploaded_files = st.file_uploader("upload your files (accepts CSV or Excel):", type=["csv","xlsx"], accept_multiple_files=(True))
 
-if uploded_files:
-    for file in uploded_files:
+if uploaded_files:
+    for file in uploaded_files:
         file_ext = os.path.splitext(file.name)[-1].lower()
 
         if file_ext == ".csv":
@@ -58,8 +58,8 @@ if uploded_files:
 
             with col2:
                 if st.button(f"Fill missing values for {file.name}"):
-                    numeric_cols = df.select_dtypes(includes=['number']).columns
-                    df[numeric_cols] = df[numeric_cols].fillna(df[numeric_cols].mean)
+                    numeric_cols = df.select_dtypes(include=['number']).columns
+                    df[numeric_cols] = df[numeric_cols].fillna(df[numeric_cols].mean())
                     st.write("✅ Missing values have been filled!")
 
 
@@ -80,12 +80,12 @@ if uploded_files:
         if st.button(f"Convert{file.name}"):
             buffer = BytesIO()
             if conversion_type == "CSV":
-                df.to.csv(buffer, index=False)
+                df.to_csv(buffer, index=False)
                 file_name = file.name.replace(file_ext, ".csv")
                 mime_type = "text/csv"
 
             elif conversion_type == "Excel":
-                df.to.to_excel(buffer, index=False)
+                df.to_to_excel(buffer, index=False)
                 file_name = file.name.replace(file_ext, ".xlsx")
                 mime_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 buffer.seek(0)
@@ -97,6 +97,25 @@ if uploded_files:
                     mime=mime_type
                 )
     st.success("All files processed successfully!")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
